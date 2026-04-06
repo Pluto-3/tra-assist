@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/traassist
+    username: trauser
+    password: trapass
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+ollama:
+  base-url: http://localhost:11434
+  embedding-model: nomic-embed-text
+  chat-model: mistral
