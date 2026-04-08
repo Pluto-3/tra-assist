@@ -5,6 +5,7 @@ import dev.langchain4j.model.ollama.OllamaEmbeddingModel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class OllamaConfig {
@@ -31,6 +32,12 @@ public class OllamaConfig {
         return OllamaChatModel.builder()
                 .baseUrl(baseUrl)
                 .modelName(chatModel)
+                .timeout(java.time.Duration.ofMinutes((5)))
                 .build();
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }
