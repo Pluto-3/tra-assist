@@ -1,6 +1,7 @@
 package com.traassist.tra_assist.rag;
 
 import com.traassist.tra_assist.language.LanguageService;
+import com.traassist.tra_assist.observability.ObservabilityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,10 @@ public class RagService {
     private final ConfidenceService confidenceService;
     private final DisclaimerService disclaimerService;
     private final LanguageService languageService;
+    private final ObservabilityService observabilityService;
 
     public RagResponse query(String userQuery) {
+        long start = System.currentTimeMillis();
         log.info("Processing query: {}", userQuery);
 
         boolean isSwahili = languageService.isSwahili(userQuery);
@@ -35,7 +38,10 @@ public class RagService {
 
         if (isSwahili) finalAnswer = languageService.translateToSwahili(finalAnswer);
 
-        log.info("Confidence: {} | Similarity: {}", confidence, topSimilarity, isSwahili ? "sw" : "en");
+        long elapsed = System.currentTimeMillis() - start;
+        observabilityService.log(userQuery, finalAnswer, confidence.name(), topSimilarity, isSwahili, elapsed);
+
+        log.info("Query done | confidence={} similarity={} time={}ms", confidence, topSimilarity, elapsed);
 
         RagResponse response = new RagResponse();
         response.setAnswer(finalAnswer);
