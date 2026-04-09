@@ -32,7 +32,7 @@ public class OllamaConfig {
         return OllamaChatModel.builder()
                 .baseUrl(baseUrl)
                 .modelName(chatModel)
-                .timeout(java.time.Duration.ofMinutes((5)))
+                .timeout(java.time.Duration.ofMinutes((10)))
                 .build();
     }
 

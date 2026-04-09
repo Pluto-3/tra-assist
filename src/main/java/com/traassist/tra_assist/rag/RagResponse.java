@@ -9,4 +9,5 @@ public class RagResponse {
     private String answer;
     private List<String> sources;
     private double topSimilarity;
+    private String confidence;
 }

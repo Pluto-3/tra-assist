@@ -13,6 +13,8 @@ public class RagService {
 
     private final RetrievalService retrievalService;
     private final GenerationService generationService;
+    private final ConfidenceService confidenceService;
+    private final DisclaimerService disclaimerService;
 
     public RagResponse query(String userQuery) {
         log.info("Processing query: {}", userQuery);
@@ -20,12 +22,18 @@ public class RagService {
         List<RetrievedChunk> chunks = retrievalService.retrieve(userQuery, 3);
         String answer = generationService.generate(userQuery, chunks);
 
-        RagResponse response = new RagResponse();
-        response.setAnswer(answer);
-        response.setSources(chunks.stream().map(RetrievedChunk::getSourceFile).distinct().toList());
-        response.setTopSimilarity(chunks.isEmpty() ? 0 : chunks.get(0).getSimilarity());
+        double topSimilarity = chunks.isEmpty() ? 0 : chunks.get(0).getSimilarity();
+        ConfidenceLevel confidence = confidenceService.evaluate(topSimilarity, answer);
+        String finalAnswer = disclaimerService.attach(answer, confidence);
 
-        log.info("Query processed. Top similarity: {}", response.getTopSimilarity());
+        log.info("Confidence: {} | Similarity: {}", confidence, topSimilarity);
+
+        RagResponse response = new RagResponse();
+        response.setAnswer(finalAnswer);
+        response.setSources(chunks.stream().map(RetrievedChunk::getSourceFile).distinct().toList());
+        response.setTopSimilarity(topSimilarity);
+        response.setConfidence(confidence.name());
+
         return response;
     }
 }
