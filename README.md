@@ -1,6 +1,6 @@
 # TRA Assist
 
-A RAG-powered tax guidance assistant for small businesses in Tanzania, accessible via Telegram. Built entirely with local, open-source tools — zero API costs, zero cloud dependency.
+A RAG-powered tax guidance assistant for small businesses in Tanzania, accessible via Telegram. Built entirely with local, open-source tools  zero API costs, zero cloud dependency.
 
 ---
 
@@ -174,11 +174,11 @@ docker exec -it tra-postgres psql -U trauser -d traassist \
 
 ## Known Limitations
 
-- **Swahili quality is poor** — Mistral is not a strong Swahili model. English queries are recommended until a better model is available.
-- **GPU acceleration** — Ollama may run Mistral on CPU depending on driver setup, resulting in slow responses (30–180 seconds). See [Ollama GPU docs](https://github.com/ollama/ollama/blob/main/docs/gpu.md).
-- **Single document coverage** — Retrieval quality improves significantly with more TRA documents ingested.
-- **No authentication** — The bot accepts queries from any Telegram user. Add rate limiting before production deployment.
-- **This is guidance only** — All responses include a disclaimer. Always verify with TRA at [www.tra.go.tz](https://www.tra.go.tz).
+- **Swahili quality is poor**  Mistral is not a strong Swahili model. English queries are recommended until a better model is available.
+- **GPU acceleration**  Ollama may run Mistral on CPU depending on driver setup, resulting in slow responses (30–180 seconds). See [Ollama GPU docs](https://github.com/ollama/ollama/blob/main/docs/gpu.md).
+- **Single document coverage**  Retrieval quality improves significantly with more TRA documents ingested.
+- **No authentication**  The bot accepts queries from any Telegram user. Add rate limiting before production deployment.
+- **This is guidance only**  All responses include a disclaimer. Always verify with TRA at [www.tra.go.tz](https://www.tra.go.tz).
 
 ---
 
